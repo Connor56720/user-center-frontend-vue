@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^4.2.6",
+    "axios": "^1.10.0",
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"
@@ -29,7 +30,7 @@
     "prettier": "^2.4.1",
     "typescript": "~4.5.5"
   },
-  "prettier":{
+  "prettier": {
     "endOfLine": "crlf",
     "semi": false,
     "singleQuote": true
