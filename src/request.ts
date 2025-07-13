@@ -1,39 +1,39 @@
-import axios from "axios";
+import axios from 'axios'
 
 const myAxios = axios.create({
-  baseURL: "https://localhost:8080",
+  baseURL: 'http://localhost:8080',
   timeout: 10000,
   withCredentials: true,
-});
+})
 
 myAxios.interceptors.request.use(
   function (config) {
-    return config;
+    return config
   },
-  function (error) { 
-    return Promise.reject(error);
+  function (error) {
+    return Promise.reject(error)
   }
-);
+)
 
 myAxios.interceptors.response.use(
   function (response) {
-    console.log(response);
-    const { data } = response;
-    console.log(data);
+    console.log(response)
+    const { data } = response
+    console.log(data)
     // 未登录
     if (data.code === 40100) {
       if (
-        !response.request.responseURL.includes("user/current") &&
-        !window.location.pathname.includes("/user/login")
+        !response.request.responseURL.includes('user/current') &&
+        !window.location.pathname.includes('/user/login')
       ) {
-        window.location.href = `/user/login?redirect=${window.location.href}`;
+        window.location.href = `/user/login?redirect=${window.location.href}`
       }
     }
-    return response;
+    return response
   },
   function (error) {
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)
 
-export default myAxios;
+export default myAxios
