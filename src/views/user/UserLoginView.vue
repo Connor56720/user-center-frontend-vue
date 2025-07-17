@@ -31,7 +31,7 @@
           { min: 8, message: '密码长度不能小于8位' },
         ]"
       >
-        <a-input
+        <a-input-password
           v-model:value="formState.userPassword"
           placehoder="请输入密码"
         />
@@ -49,6 +49,9 @@ import { userLogin } from '@/api/user'
 import { reactive } from 'vue'
 import { useLoginUserStore } from '@/store/useLoginUserStore'
 import { message } from 'ant-design-vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 interface FormState {
   userAccount: string
@@ -68,6 +71,12 @@ const handleSubmit = async (values: any) => {
   if (res.data.code === 0 && res.data.data) {
     await loginUserStore.fetchLoginUser()
     message.success('登录成功')
+    router.push({
+      path: '/',
+      replace: true,
+    })
+  } else {
+    message.error('登录失败')
   }
 
   console.log('Success:', values)
