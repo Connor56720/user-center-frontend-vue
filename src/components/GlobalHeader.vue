@@ -15,10 +15,28 @@
           @click="doMenuClick"
         />
       </a-col>
-      <a-col flex="80px">
+
+      <a-col flex="100px">
+        <div class="avatar-bar">
+          <img
+            class="avatar"
+            :src="loginUserStore.loginUser.avatarUrl ?? '../assets/logo.png'"
+            alt="avatar"
+          />
+        </div>
+      </a-col>
+
+      <a-col flex="120px">
         <div class="user-login-status">
           <div v-if="loginUserStore.loginUser.id">
-            {{ loginUserStore.loginUser.username ?? '无名' }}
+            <div class="user-info">
+              <span class="username">
+                {{ loginUserStore.loginUser.username ?? '无名' }}
+              </span>
+              <a-button type="link" size="small" @click="handleLogout">
+                登出
+              </a-button>
+            </div>
           </div>
           <div v-else>
             <a-button type="primary" href="/user/login">登录</a-button>
@@ -34,10 +52,25 @@ import { HomeOutlined, CrownOutlined } from '@ant-design/icons-vue'
 import { MenuProps } from 'ant-design-vue'
 import { useRouter } from 'vue-router'
 import { useLoginUserStore } from '@/store/useLoginUserStore'
+import { userLogout } from '@/api/user'
+import { message } from 'ant-design-vue'
 
 const loginUserStore = useLoginUserStore()
 
 const router = useRouter()
+
+// 登出处理
+const handleLogout = async () => {
+  try {
+    await userLogout({})
+    loginUserStore.setLoginUser({ username: '未登录' })
+    message.success('登出成功')
+    router.push('/')
+  } catch (error) {
+    message.error('登出失败')
+  }
+}
+
 // 点击菜单的路由跳转事件
 const doMenuClick = ({ key }: { key: string }) => {
   router.push({
@@ -97,5 +130,34 @@ const items = ref<MenuProps['items']>([
 }
 .logo {
   height: 48px;
+}
+.avatar-bar {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.user-login-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.username {
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 20px;
 }
 </style>
