@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import UserLogin from '../views/user/UserLoginView.vue'
 import UserRegister from '../views/user/UserRegisterView.vue'
 import UserManage from '../views/admin/UserManageView.vue'
+import UserProfile from '../views/user/UserProfileView.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -23,6 +24,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/admin/userManage',
     name: 'adminUserManage',
     component: UserManage,
+  },
+  {
+    path: '/user/profile',
+    name: 'userProfile',
+    component: UserProfile,
   },
 ]
 
